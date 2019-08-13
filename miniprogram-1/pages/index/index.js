@@ -1,54 +1,145 @@
-//index.js
-//获取应用实例
-const app = getApp()
 
+var api=require('../../utils/api.js');
+var config=require('../../utils/config.js');
+var util=require('../../utils/util.js');
+//获取应用实例
+var app = getApp()
 Page({
-  data: {
-    motto: 'Hello World',
+  data: { 
+    swiper:null,
+    img220:config.img220,
+    img800:config.img800,
+    version:null,
+    currentTab:1,
     userInfo: {},
-    hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
-  },
-  //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
-  },
+    products:[]
+  }, 
+
   onLoad: function () {
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse){
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
-        }
-      })
+    console.log('onLoad') 
+    var that = this
+
+    this.init();
+
+    this.chooseAll();
+ 
+  //swiper广告
+    this.getSwiper();
+     
+  }, 
+
+  onShareAppMessage:function(){
+    return {
+      title: '生活服务预约',
+      desc: '预约小程序',
+      path: '/pages/index/index.js'
     }
   },
-  getUserInfo: function(e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
+
+  init:function(){
+    var v=new Date().getTime();
     this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
+      version:v
     })
-  }
+
+    
+  },
+ 
+
+ //筛选
+  chooseItemClick:function(e){
+    var ds=e.currentTarget.dataset;
+    var clickedTab=ds.tab;
+    var currentTab=this.data.currentTab;
+    if(currentTab==clickedTab){
+      return;
+    }
+    this.setData({
+      currentTab:ds.tab
+    })
+    var ct=this.data.currentTab;
+    if(ct==1){
+      this.chooseAll();
+    }else if(ct==2){
+      this.chooseHot();
+    }else if(ct==3){
+      this.chooseRecent();
+    }else if(ct==4){
+      this.chooseMode(1);
+    }
+  },
+
+  //点击单个
+  itemClick:function(e){
+    var ds = e.currentTarget.dataset;
+    wx.navigateTo({
+      url:'../product/product?id='+ds.id
+    }) 
+  },
+
+  
+  getSwiper:function(){
+    var that=this;
+    
+    api.getSwiperData(config.mid,function(res){ 
+      var products=res.data.products;
+      var swiper=new Array();
+      for(var i=0;i<3;i++){
+        swiper.push(products[i].p_icon);
+      }
+      console.log("广告返回：==========="+swiper); 
+      wx.setStorageSync('swiper', swiper);
+      that.setData({
+        swiper:swiper
+      })
+    });
+  },
+
+  chooseAll:function(){
+      var that=this;
+      
+      api.getProductData(config.mid,function a(res){
+        that.setData({
+          products:res.data.products
+        });
+        console.log("请求返回：==========="+res.data.products);
+        //存本地
+        wx.setStorageSync('products', that.data.products);
+      });
+      
+  },
+
+  chooseHot:function(){
+    var that=this;
+     api.getHotProductData(config.mid,function(res){
+        that.setData({
+          products:res.data.products
+        });
+        console.log("请求返回：==========="+res.data.products);
+     })
+  },
+
+  chooseRecent:function(){
+    var that = this;
+    api.getRecentProductData(config.mid, function(res){
+      that.setData({
+        products: res.data.products
+      });
+      console.log("请求返回：===========" + res.data.products);
+    });
+  },
+
+  chooseMode:function(mode){
+     var that=this;
+     api.getModeProductData(config.mid,mode,function(res){
+        that.setData({
+          products:res.data.products
+        });
+        console.log("请求返回：==========="+res.data.products);
+     })
+  }, 
+ 
+
+  
 })
+
