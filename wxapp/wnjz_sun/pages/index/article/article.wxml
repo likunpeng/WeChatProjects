@@ -1,0 +1,23 @@
+<view class="container">
+    <view>
+        <scroll-view scrollX class="nav-group">
+            <view bindtap="navTab" data-id="" data-index="-1">
+                <text class="nav {{curIndex==-1?'on':''}}" data-id="0">全部</text>
+            </view>
+            <view bindtap="navTab" data-id="{{item.tid}}" data-index="{{index}}" wx:for="{{navBar}}">
+                <text class="nav {{curIndex==index?'on':''}}">{{item.tname}}</text>
+            </view>
+        </scroll-view>
+        <view bindtap="toArcdet" class="section-list" data-id="{{itm.seid}}" wx:for="{{section}}" wx:for-index="idx" wx:for-item="itm">
+            <view class="list-left">
+                <view class="title">{{itm.sele_name}}</view>
+                <view class="desc">
+                    <rich-text nodes="{{itm.content}}"></rich-text>
+                </view>
+            </view>
+            <view>
+                <image class="thumb" src="{{url}}{{itm.logo}}"></image>
+            </view>
+        </view>
+    </view>
+</view>
