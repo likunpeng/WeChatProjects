@@ -38,7 +38,7 @@ App({
                 active: !0
             },
              {
-                pagePath: "/wnjz_sun/pages/user/user",
+                pagePath: "/wnjz_sun/pages/user/mine",
                 text: "我的",
                 iconPath: "/style/images/tab_mine.png",
                 selectedIconPath: "/style/images/tab_mine_selected.png",
