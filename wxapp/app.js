@@ -31,30 +31,17 @@ App({
             borderStyle: "#ccc",
             list: [ {
                 pagePath: "/wnjz_sun/pages/index/index",
-                text: "",
-                iconPath: "",
-                selectedIconPath: "",
+                text: "首页",
+                iconPath: "/style/images/tab_home.png",
+                selectedIconPath: "/style/images/tab_home_selected.png",
                 selectedColor: "#41c2fc",
                 active: !0
-            }, {
-                pagePath: "/wnjz_sun/pages/bargain/bargain",
-                text: "",
-                iconPath: "",
-                selectedIconPath: "",
-                selectedColor: "#41c2fc",
-                active: !1
-            }, {
-                pagePath: "/wnjz_sun/pages/branch/branch",
-                text: "",
-                iconPath: "",
-                selectedIconPath: "",
-                selectedColor: "#41c2fc",
-                active: !1
-            }, {
+            },
+             {
                 pagePath: "/wnjz_sun/pages/user/user",
-                text: "",
-                iconPath: "",
-                selectedIconPath: "",
+                text: "我的",
+                iconPath: "/style/images/tab_mine.png",
+                selectedIconPath: "/style/images/tab_mine_selected.png",
                 selectedColor: "#41c2fc",
                 active: !1
             } ],
