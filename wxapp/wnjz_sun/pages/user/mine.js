@@ -15,15 +15,13 @@ Page((_defineProperty(_Page = {
   data: {
     mineTabs: ["收藏", "订阅", "浏览"],
     curIdenx: "0",
-    umoney: [],
-    cardnum: [],
-    jszc: {
-      js_name: "",
-      js_logo: "",
-      js_tel: ""
-    },
-    isIpx: app.globalData.isIpx,
-    open_distribution: !1
+    all: [],
+    waitSer: [],
+    dzf: [],
+    dpj: [],
+    sh: [],
+    url: [],
+    status: []
   },
   onLoad: function (e) {
     app.editTabBar();
