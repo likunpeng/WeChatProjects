@@ -90,6 +90,30 @@
     padding: 20rpx 0rpx;
     border-bottom: 1px solid #ececec;
     font-weight: 700;
+    flex-direction: column;
+}
+
+.list-collect {
+  margin: 20px 20px 20px 20px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid #ececec;
+  font-weight: 700;
+}
+
+.item {
+    width: auto;
+    height: auto;
+    border: 1px solid #999;
+    padding-bottom: 8px;
+}
+
+.item-title {
+  margin-top: 8px;
+  color: #222;
+  text-align: center;
 }
 
 .list-left {

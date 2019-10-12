@@ -13,7 +13,7 @@ var app = getApp();
 
 Page((_defineProperty(_Page = {
   data: {
-    mineTabs: ["收藏", "订阅", "浏览"],
+    tabs: ["收藏", "订阅", "浏览"],
     curIdenx: "0",
     all: [],
     waitSer: [],
@@ -54,18 +54,6 @@ Page((_defineProperty(_Page = {
             jszc: t.data.jszc
           });
       }
-    }), app.util.request({
-      url: "entry/wxapp/Plugin",
-      data: {
-        type: 1
-      },
-      showLoading: !1,
-      success: function (e) {
-        var a = 2 != e.data && e.data;
-        console.log("分销"), console.log(e.data), t.setData({
-          open_distribution: a
-        });
-      }
     });
   },
   getUrl: function () {
@@ -82,19 +70,113 @@ Page((_defineProperty(_Page = {
   },
   onReady: function () { },
   onShow: function () {
-    var t = this, e = wx.getStorageSync("openid"), a = wx.getStorageSync("build_id");
+    var e = this, t = wx.getStorageSync("build_id"), a = wx.getStorageSync("openid");
+    var data = {
+      list: [{
+        id: 1,
+        name: '苹果说明书',
+        pic: '/style/images/tab_home.png',
+        time: '2019-10-12',
+        num: 3,
+        oid: 0,
+        status: 2,
+        orderNum: '00001',
+      }, {
+        id: 2,
+        name: '华为说明书',
+        pic: '/style/images/tab_home.png',
+        time: '2019-10-12',
+        num: 4,
+        oid: 3,
+        status: 3,
+        orderNum: '00003',
+      }]
+    }
+    e.setData({
+      allorder:data.list
+    })
+    // app.util.request({
+    //   url: "entry/wxapp/Orrde",
+    //   cachetime: "0",
+    //   method: "GET",
+    //   data: {
+    //     userid: a,
+    //     build_id: t
+    //   },
+    //   success: function (t) {
+    //     e.setData({
+    //       // allorder: t.data.data,
+    //       allorder: data.list,
+    //       status: !0
+    //     }), e.getdafuwu(), e.getdazhifu(), e.getdaquer(), e.getservices();
+    //   }
+    // });
+  },
+  getdafuwu: function () {
+    var t = wx.getStorageSync("openid"), e = wx.getStorageSync("build_id"), a = this;
     app.util.request({
-      url: "entry/wxapp/Countcounp",
+      url: "entry/wxapp/dafuwu",
+      cachetime: "0",
       method: "GET",
       data: {
-        userid: e,
-        build_id: a
+        userid: t,
+        build_id: e
       },
-      success: function (e) {
-        var a = e.data.length;
-        t.setData({
-          cardnum: a
-        }), t.Moneys();
+      success: function (t) {
+        a.setData({
+          waitSer: t.data
+        });
+      }
+    });
+  },
+  getdazhifu: function () {
+    var t = wx.getStorageSync("openid"), e = wx.getStorageSync("build_id"), a = this;
+    app.util.request({
+      url: "entry/wxapp/dazhifu",
+      cachetime: "0",
+      method: "GET",
+      data: {
+        userid: t,
+        build_id: e
+      },
+      success: function (t) {
+        a.setData({
+          dzf: t.data
+        });
+      }
+    });
+  },
+  getdaquer: function () {
+    var t = wx.getStorageSync("openid"), e = wx.getStorageSync("build_id"), a = this;
+    app.util.request({
+      url: "entry/wxapp/daqueren",
+      cachetime: "0",
+      method: "GET",
+      data: {
+        userid: t,
+        build_id: e
+      },
+      success: function (t) {
+        a.setData({
+          sh: t.data
+        });
+      }
+    });
+  },
+  getservices: function () {
+    var t = wx.getStorageSync("openid"), e = wx.getStorageSync("build_id"), a = this;
+    app.util.request({
+      url: "entry/wxapp/services",
+      cachetime: "0",
+      method: "GET",
+      data: {
+        openid: t,
+        build_id: e
+      },
+      success: function (t) {
+        a.setData({
+          overservices: t.data
+        });
       }
     });
   },
@@ -118,78 +200,5 @@ Page((_defineProperty(_Page = {
     wx.navigateTo({
       url: "service/service"
     });
-  },
-  toAddress: function (e) {
-    wx.navigateTo({
-      url: "address/address"
-    });
   }
-}, "toBackstage", function (e) {
-  wx.navigateTo({
-    url: "../backstage/backstage"
-  });
-}), _defineProperty(_Page, "toDialogue", function (e) {
-  wx.navigateTo({
-    url: "dialogue/dialogue"
-  });
-}), _defineProperty(_Page, "toBgorder", function (e) {
-  wx.navigateTo({
-    url: "bgorder/bgorder"
-  });
-}), _defineProperty(_Page, "toRecharge", function (e) {
-  wx.navigateTo({
-    url: "recharge/recharge"
-  });
-}), _defineProperty(_Page, "toBargain", function (e) {
-  wx.navigateTo({
-    url: "bargain/bargain"
-  });
-}), _defineProperty(_Page, "toCards", function (e) {
-  wx.navigateTo({
-    url: "cards/cards"
-  });
-}), _defineProperty(_Page, "dialogYZ", function (e) {
-  wx.makePhoneCall({
-    phoneNumber: this.data.shop.js_tel
-  });
-}), _defineProperty(_Page, "toAddress", function () {
-  var a = this;
-  wx.chooseAddress({
-    success: function (e) {
-      console.log(e), console.log("获取地址成功"), a.setData({
-        address: e,
-        hasAddress: !0
-      });
-    },
-    fail: function (e) {
-      console.log("获取地址失败");
-    }
-  });
-}), _defineProperty(_Page, "toMybill", function (e) {
-  wx.navigateTo({
-    url: "mybill/mybill"
-  });
-}), _defineProperty(_Page, "toFxCenter", function (e) {
-  this.data.open_distribution;
-  var a = wx.getStorageSync("openid"), t = e.detail.formId, n = wx.getStorageSync("users");
-  app.util.request({
-    url: "entry/wxapp/IsPromoter",
-    data: {
-      openid: a,
-      form_id: t,
-      uid: n.id,
-      status: 3,
-      m: app.globalData.Plugin_distribution
-    },
-    showLoading: !1,
-    success: function (e) {
-      e && 9 != e.data ? 0 == e.data ? wx.navigateTo({
-        url: "/wnjz_sun/plugin/distribution/fxAddShare/fxAddShare"
-      }) : wx.navigateTo({
-        url: "/wnjz_sun/plugin/distribution/fxCenter/fxCenter"
-      }) : wx.navigateTo({
-        url: "/wnjz_sun/plugin/distribution/fxAddShare/fxAddShare"
-      });
-    }
-  });
 }), _Page));
