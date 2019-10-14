@@ -2,10 +2,16 @@ var app = getApp();
 
 Page({
     data: {
-        imgUrls: [],
+        imgUrls: {
+          lb_imgs: '/style/images/banner01.png',
+          lb_imgs1: '/style/images/banner02.png',
+          lb_imgs2: '/style/images/banner03.png',
+          lb_imgs3: '/style/images/banner04.png',
+        },
+        navdata: ["推荐", "家用电器", "数码产品", "办公设备", "家具", "厨房用品", "小玩具","儿童书"],
         indicatorDots: !1,
         autoplay: !1,
-        interval: 3e3,
+        interval: 3e3, 
         duration: 800,
         url: [],
         hot: [],
@@ -90,6 +96,8 @@ Page({
                 });
             }
         });
+
+        
     },
     onShow: function() {
         var a = this, t = a.data.options;
@@ -126,6 +134,31 @@ Page({
             }
         });
     },
+
+  switchNav(event) {
+    var cur = event.currentTarget.dataset.current;
+    //每个tab选项宽度占1/5
+    var singleNavWidth = this.data.windowWidth / 4;
+    //tab选项居中                            
+    this.setData({
+      navScrollLeft: (cur - 2) * singleNavWidth
+    })
+    if (this.data.currentTab == cur) {
+      return false;
+    } else {
+      this.setData({
+        currentTab: cur
+      })
+    }
+  },
+  switchTab(event) {
+    var cur = event.detail.current;
+    var singleNavWidth = this.data.windowWidth / 5;
+    this.setData({
+      currentTab: cur,
+      navScrollLeft: (cur - 2) * singleNavWidth
+    });
+  },
     getnewdr: function() {
         var a = this;
         app.util.request({

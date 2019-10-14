@@ -1,9 +1,10 @@
 .header {
-    position: relative;
+    /* position: relative; */
 }
 
 swiper {
-    height: 374rpx;
+    height: 140px;
+    margin-top: 50px;
 }
 
 .slide-image {
@@ -16,12 +17,13 @@ swiper {
     align-items: center;
     position: absolute;
     bottom: 40rpx;
-    left: 75rpx;
+    left: 35rpx;
     padding-left: 80rpx;
-    width: 520rpx;
+    width: 600rpx;
     height: 70rpx;
     background: rgba(255,255,255,0.88);
     border-radius: 35rpx;
+    top: 1%;
 }
 
 .search input {
@@ -32,6 +34,40 @@ swiper {
     height: 30rpx;
     width: 30rpx;
     margin-right: 24rpx;
+}
+
+
+.nav {
+    height: 80rpx;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    line-height: 80rpx;
+    background: #f7f7f7;
+    font-size: 16px;
+    white-space: nowrap;
+    /* position: fixed; */
+    /* top: 0; */
+    left: 0;
+    z-index: 99;
+}
+.nav-item {
+    width: 25%;
+    display: inline-block;
+    text-align: center;
+}
+
+.nav-item.active{
+    color: red;
+}
+.tab-box{
+    background: greenyellow;
+    padding-top: 80rpx;
+    height: 100%;
+    box-sizing: border-box;
+}
+.tab-content{
+    overflow-y: scroll;
 }
 
 .notice {
