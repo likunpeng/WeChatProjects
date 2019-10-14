@@ -16,9 +16,8 @@ Page((_defineProperty(_Page = {
     tabs: ["收藏", "订阅", "浏览"],
     curIdenx: "0",
     all: [],
-    waitSer: [],
-    dzf: [],
-    dpj: [],
+    allhistory: [],
+    allsubscribe: [],
     sh: [],
     url: [],
     status: []
@@ -93,8 +92,12 @@ Page((_defineProperty(_Page = {
       }]
     }
     e.setData({
-      allorder:data.list
+      allcollect: data.list,
+      allsubscribe: data.list,
+      // allhistory: data.list
     })
+
+
     // app.util.request({
     //   url: "entry/wxapp/Orrde",
     //   cachetime: "0",
@@ -105,81 +108,14 @@ Page((_defineProperty(_Page = {
     //   },
     //   success: function (t) {
     //     e.setData({
-    //       // allorder: t.data.data,
-    //       allorder: data.list,
+    //       // allcollect: t.data.data,
+    //       allcollect: data.list,
     //       status: !0
     //     }), e.getdafuwu(), e.getdazhifu(), e.getdaquer(), e.getservices();
     //   }
     // });
   },
-  getdafuwu: function () {
-    var t = wx.getStorageSync("openid"), e = wx.getStorageSync("build_id"), a = this;
-    app.util.request({
-      url: "entry/wxapp/dafuwu",
-      cachetime: "0",
-      method: "GET",
-      data: {
-        userid: t,
-        build_id: e
-      },
-      success: function (t) {
-        a.setData({
-          waitSer: t.data
-        });
-      }
-    });
-  },
-  getdazhifu: function () {
-    var t = wx.getStorageSync("openid"), e = wx.getStorageSync("build_id"), a = this;
-    app.util.request({
-      url: "entry/wxapp/dazhifu",
-      cachetime: "0",
-      method: "GET",
-      data: {
-        userid: t,
-        build_id: e
-      },
-      success: function (t) {
-        a.setData({
-          dzf: t.data
-        });
-      }
-    });
-  },
-  getdaquer: function () {
-    var t = wx.getStorageSync("openid"), e = wx.getStorageSync("build_id"), a = this;
-    app.util.request({
-      url: "entry/wxapp/daqueren",
-      cachetime: "0",
-      method: "GET",
-      data: {
-        userid: t,
-        build_id: e
-      },
-      success: function (t) {
-        a.setData({
-          sh: t.data
-        });
-      }
-    });
-  },
-  getservices: function () {
-    var t = wx.getStorageSync("openid"), e = wx.getStorageSync("build_id"), a = this;
-    app.util.request({
-      url: "entry/wxapp/services",
-      cachetime: "0",
-      method: "GET",
-      data: {
-        openid: t,
-        build_id: e
-      },
-      success: function (t) {
-        a.setData({
-          overservices: t.data
-        });
-      }
-    });
-  },
+
   navTab: function (t) {
     var e = t.currentTarget.dataset.index;
     this.setData({
