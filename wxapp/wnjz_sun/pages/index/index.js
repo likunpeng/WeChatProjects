@@ -221,17 +221,22 @@ Page({
       navScrollLeft: (cur - 2) * singleNavWidth
     });
   },
-    getnewdr: function() {
-        var a = this;
-        app.util.request({
-            url: "entry/wxapp/new",
-            success: function(t) {
-                console.log(t.data), a.setData({
-                    notice: t.data
-                });
-            }
-        });
-    },
+  getnewdr: function() {
+      var a = this;
+      app.util.request({
+          url: "entry/wxapp/new",
+          success: function(t) {
+              console.log(t.data), a.setData({
+                  notice: t.data
+              });
+          }
+      });
+  },
+  goDetails: function (t) {
+    wx.navigateTo({
+      url: "/wnjz_sun/pages/index/detail/detail"
+    });
+  },
     getBannerd: function() {
         var a = this;
         app.util.request({

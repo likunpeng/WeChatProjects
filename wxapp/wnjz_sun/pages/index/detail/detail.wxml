@@ -1,0 +1,57 @@
+<import src="../template/nav/nav.wxml"></import>
+<template is="tabBar" data="{{tabBar:tabBar,isIpx:isIpx}}"></template>
+<view class="container">
+    <view>
+        <view class="user-header">
+            <view class="user-info">
+                <image class="product" src="{{thumb}}"></image>
+            </view>
+        </view>
+        <view id="styleSecond">
+          <view class="session session1">
+              <view bindtap="toFxCenter" class="lst">
+                  <image src="../../../../style/images/icon02.png"></image>
+                  <view class="product-header">
+                    <text class="product-name">充电式真空吸尘器(家用型)</text>
+                    <text class="product-type">型号：MC-WDD91</text>
+                  </view>
+                  
+              </view>
+          </view>
+        </view>
+        <view class="session">
+            <view bindtap="toService" class="session-list">
+                <view>
+                    <image class="iconlist" src="../../../../style/images/icon4.png"></image>
+                    <text>产品说明书</text>
+                </view>
+                <image class="right" src="../../../../style/images/right.png"></image>
+            </view>
+            <view bindtap="toBgorder" class="session-list">
+                <view>
+                    <image class="iconlist" src="../../../../style/images/icon9.png"></image>
+                    <text>快速使用指南</text>
+                </view>
+                <image class="right" src="../../../../style/images/right.png"></image>
+            </view>
+            <view bindtap="toBargain" class="session-list ">
+                <view>
+                    <image class="iconlist" src="../../../../style/images/icon7.png"></image>
+                    <text>咨询服务</text>
+                </view>
+                <image class="right" src="../../../../style/images/right.png"></image>
+            </view>
+            <view bindtap="toMybill" class="session-list session-lat">
+                <view>
+                    <image class="iconlist" src="../../../../style/images/icon29.png"></image>
+                    <text>常见问题</text>
+                </view>
+                <image class="right" src="../../../../style/images/right.png"></image>
+            </view>
+        </view>
+        <view class="foot">
+          <text class=".tips">相关使用视频</text>
+          <video class=".video"></video>
+        </view>
+    </view>
+</view>
