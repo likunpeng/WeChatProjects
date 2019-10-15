@@ -2,100 +2,162 @@ var app = getApp();
 
 Page({
     data: {
-        imgUrls: {
-          lb_imgs: '/style/images/banner01.png',
-          lb_imgs1: '/style/images/banner02.png',
-          lb_imgs2: '/style/images/banner03.png',
-          lb_imgs3: '/style/images/banner04.png',
-        },
-        navdata: ["推荐", "家用电器", "数码产品", "办公设备", "家具", "厨房用品", "小玩具","儿童书"],
-        indicatorDots: !1,
-        autoplay: !1,
-        interval: 3e3, 
-        duration: 800,
-        url: [],
-        hot: [],
-        order: [],
-        jszc: {
-            js_name: "",
-            js_logo: "",
-            js_tel: ""
-        },
-        is_modal_Hidden: !0,
-        isIpx: app.globalData.isIpx
+      imgUrls: {
+        lb_imgs: '/style/images/banner01.png',
+        lb_imgs1: '/style/images/banner02.png',
+        lb_imgs2: '/style/images/banner03.png',
+        lb_imgs3: '/style/images/banner04.png',
+      },
+      navdata: ["推荐", "家用电器", "数码产品", "办公设备", "家具", "厨房用品", "小玩具","儿童书"],
+      hasUserInfo: false,
+      canIUse: wx.canIUse('button.open-type.getUserInfo'),
+      userInfo: {},
+      currentTab: 0,
+      navScrollLeft: 0,
+      indicatorDots: !1,
+      autoplay: !1,
+      interval: 3e3, 
+      duration: 800,
+      alldata: {
+        list: [{
+          id: 1,
+          name: '苹果说明书',
+          pic: '/style/images/tab_home.png',
+          time: '2019-10-12',
+          num: 3,
+          oid: 0,
+          status: 2,
+          orderNum: '00001',
+        }, {
+          id: 2,
+          name: '华为说明书',
+          pic: '/style/images/tab_home.png',
+          time: '2019-10-12',
+          num: 4,
+          oid: 3,
+          status: 3,
+          orderNum: '00003',
+        }]
+      },
+      url: [],
+      hot: [],
+      order: [],
+      jszc: {
+          js_name: "",
+          js_logo: "",
+          js_tel: ""
+      },
+      is_modal_Hidden: !0,
+      isIpx: app.globalData.isIpx
     },
     onLoad: function(t) {
-        app.editTabBar(), wx.showLoading({
-            title: "加载中"
-        });
-        var o = this;
-        console.log("ceshi2-------------"), console.log(t.scene), console.log("ceshi2-------------"), 
-        t = app.func.decodeScene(t), o.setData({
-            options: t
-        }), wx.setNavigationBarTitle({
-            title: o.data.navTile
-        }), (o = this).getUrl();
-        var n = wx.getStorageSync("openid"), a = wx.getStorageSync("isSwitch");
-        if (console.log(a), 1 == a) var s = 1; else s = 2;
-        wx.setStorageSync("Switch", s), wx.getLocation({
-            type: "gcj02",
-            success: function(t) {
-                var a = t.latitude, e = t.longitude;
-                app.util.request({
-                    url: "entry/wxapp/CurrentBranch",
-                    cachetime: "0",
-                    data: {
-                        openid: n,
-                        latitude: a,
-                        longitude: e,
-                        Switch: s
-                    },
-                    success: function(t) {
-                        o.setData({
-                            Branch: t.data
-                        }), wx.setStorageSync("build_id", t.data.id);
-                    }
-                });
-            },
-            fail: function(t) {
-                console.log("获取地址失败"), wx.getSetting({
-                    success: function(t) {
-                        t.authSetting["scope.address"] || (console.log("进入信息授权开关页面"), wx.openSetting({
-                            success: function(t) {
-                                console.log("openSetting success", t.authSetting);
-                            }
-                        }));
-                    }
-                });
-            }
-        }), o.wxauthSetting(), app.util.request({
-            url: "entry/wxapp/system",
-            cachetime: "0",
-            success: function(t) {
-                console.log(t.data), "" != t.data.js_tel && null != t.data.js_tel && (o.data.jszc.js_tel = t.data.js_tel), 
-                "" != t.data.js_name && null != t.data.js_name && (o.data.jszc.js_name = t.data.js_name), 
-                "" != t.data.js_logo && null != t.data.js_logo && (o.data.jszc.js_logo = t.data.js_logo), 
-                console.log(o.data.jszc), o.setData({
-                    shop: t.data,
-                    jszc: o.data.jszc
-                });
-                t.data.pt_name ? wx.setNavigationBarTitle({
-                    title: t.data.pt_name
-                }) : wx.setNavigationBarTitle({
-                    title: "首页"
-                }), wx.setStorageSync("system", t.data), wx.setStorageSync("color", t.data.color), 
-                wx.setStorageSync("fontcolor", t.data.fontcolor), wx.setNavigationBarColor({
-                    frontColor: wx.getStorageSync("fontcolor"),
-                    backgroundColor: wx.getStorageSync("color"),
-                    animation: {
-                        duration: 0,
-                        timingFunc: "easeIn"
-                    }
-                }), o.setData({
-                    jikaopen: t.data.is_jkopen
-                });
-            }
-        });
+      if(app.globalData.userInfo) {
+        this.setData({
+          userInfo: app.globalData.userInfo,
+          hasUserInfo: true
+        })
+      } else if(this.data.canIUse) {
+        app.userInfoReadyCallback = res => {
+          this.setData({
+            userInfo: res.userInfo,
+            hasUserInfo: true
+          })
+        }
+      } else {
+        // 在没有 open-type=getUserInfo 版本的兼容处理
+        wx.getUserInfo({
+          success: res => {
+            app.globalData.userInfo = res.userInfo
+            this.setData({
+              userInfo: res.userInfo,
+              hasUserInfo: true
+            })
+          }
+        })
+      }
+
+      wx.getSystemInfo({
+        success: (res) => {
+          this.setData({
+            pixelRatio: res.pixelRatio,
+            windowHeight: res.windowHeight,
+            windowWidth: res.windowWidth
+          })
+        },
+      })
+
+      app.editTabBar(), wx.showLoading({
+          title: "加载中"
+      });
+      var o = this;
+      console.log("ceshi2-------------"), console.log(t.scene), console.log("ceshi2-------------"), 
+      t = app.func.decodeScene(t), 
+      o.setData({
+          options: t
+      }), wx.setNavigationBarTitle({
+          title: o.data.navTile
+      }), (o = this).getUrl();
+      var n = wx.getStorageSync("openid"), a = wx.getStorageSync("isSwitch");
+      if (console.log(a), 1 == a) var s = 1; else s = 2;
+      wx.setStorageSync("Switch", s), wx.getLocation({
+          type: "gcj02",
+          success: function(t) {
+              var a = t.latitude, e = t.longitude;
+              app.util.request({
+                  url: "entry/wxapp/CurrentBranch",
+                  cachetime: "0",
+                  data: {
+                      openid: n,
+                      latitude: a,
+                      longitude: e,
+                      Switch: s
+                  },
+                  success: function(t) {
+                      o.setData({
+                          Branch: t.data
+                      }), wx.setStorageSync("build_id", t.data.id);
+                  }
+              });
+          },
+          fail: function(t) {
+              console.log("获取地址失败"), wx.getSetting({
+                  success: function(t) {
+                      t.authSetting["scope.address"] || (console.log("进入信息授权开关页面"), wx.openSetting({
+                          success: function(t) {
+                              console.log("openSetting success", t.authSetting);
+                          }
+                      }));
+                  }
+              });
+          }
+      }), o.wxauthSetting(), app.util.request({
+          url: "entry/wxapp/system",
+          cachetime: "0",
+          success: function(t) {
+              console.log(t.data), "" != t.data.js_tel && null != t.data.js_tel && (o.data.jszc.js_tel = t.data.js_tel), 
+              "" != t.data.js_name && null != t.data.js_name && (o.data.jszc.js_name = t.data.js_name), 
+              "" != t.data.js_logo && null != t.data.js_logo && (o.data.jszc.js_logo = t.data.js_logo), 
+              console.log(o.data.jszc), o.setData({
+                  shop: t.data,
+                  jszc: o.data.jszc
+              });
+              t.data.pt_name ? wx.setNavigationBarTitle({
+                  title: t.data.pt_name
+              }) : wx.setNavigationBarTitle({
+                  title: "首页"
+              }), wx.setStorageSync("system", t.data), wx.setStorageSync("color", t.data.color), 
+              wx.setStorageSync("fontcolor", t.data.fontcolor), wx.setNavigationBarColor({
+                  frontColor: wx.getStorageSync("fontcolor"),
+                  backgroundColor: wx.getStorageSync("color"),
+                  animation: {
+                      duration: 0,
+                      timingFunc: "easeIn"
+                  }
+              }), o.setData({
+                  jikaopen: t.data.is_jkopen
+              });
+          }
+      });
 
         
     },

@@ -6,7 +6,7 @@
           <image bindtap="toSearch" class="searchIcon" src="../../../style/images/search.png"></image>
           <input bindconfirm="toSearch" bindinput="inputFocus" placeholder="搜索说明书" type="text"></input>
       </view>
-      <swiper autoplay="true" circular="true" duration="{{duration}}" indicatorActiveColor="#41c2fc" indicatorColor="rgba(255,255,255,.7)" indicatorDots="true" interval="{{interval}}">
+      <swiper autoplay="false" circular="true" duration="{{duration}}" indicatorActiveColor="#41c2fc" indicatorColor="rgba(255,255,255,.7)" indicatorDots="true" interval="{{interval}}">
           <view bindtap="godetails" data-index="0" wx:if="{{imgUrls.lb_imgs}}">
               <swiper-item>
                   <image class="slide-image" height="374" mode="scaleToFill" src="{{url}}{{imgUrls.lb_imgs}}"></image>
@@ -29,7 +29,7 @@
           </view>
       </swiper>
   </view>
-  <view>
+  <view class="content">
   <!-- tab导航栏 -->
     <!-- scroll-left属性可以控制滚动条位置 -->
     <!-- scroll-with-animation滚动添加动画过渡 -->
@@ -40,8 +40,19 @@
     </scroll-view>
     <!-- 页面内容 -->
     <swiper class="tab-box" current="{{currentTab}}" duration="300" bindchange="switchTab">        
-        <swiper-item wx:for="{{[0,1,2,3,4,5,6,7,8]}}" wx:for-item="tabItem" wx:for-index="idx" wx:key="idx" class="tab-content">
-            {{tabItem}}
+        <swiper-item wx:for="{{alldata.list}}" wx:for-item="tabItem" wx:for-index="idx" wx:key="idx" class="tab-content">
+           <view class="list-collect">
+              <view bindtap="goDetails" class="" data-id="{{item.oid}}" wx:for="{{alldata.list}}">
+                  <view class="item">
+                      <image class="img" src="{{url}}{{item.pic}}"></image>
+                      <view class="item-title">{{item.name}}</view>
+                  </view> 
+              </view>
+              <view class="nobg" wx:if="{{alldata.list.length==0}}">
+                  <image src="../../../../style/images/nobg.png"></image>
+                  <text>暂时无内容</text>
+              </view>
+          </view>
         </swiper-item>
     </swiper>
   </view>
