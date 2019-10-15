@@ -1,6 +1,7 @@
 {
   "pages": [
     "wnjz_sun/pages/index/index",
+    "wnjz_sun/pages/index/detail/detail",
     "wnjz_sun/pages/user/mybill/mybill",
     "wnjz_sun/pages/backstage/set3/set3",
     "wnjz_sun/pages/backstage/index3/index3",

@@ -13,6 +13,7 @@ var app = getApp();
 
 Page((_defineProperty(_Page = {
   data: {
+    navTile: "详情",
     isIpx: app.globalData.isIpx,
     open_distribution: true,
     thumb: "/style/images/bg_detail.jpeg",
@@ -20,13 +21,9 @@ Page((_defineProperty(_Page = {
   onLoad: function (e) {
     app.editTabBar();
     var a = this;
-    a.getUrl(), wx.getUserInfo({
-      success: function (e) {
-        a.setData({
-          nickname: e.userInfo.nickName
-        });
-      }
-    });
+    wx.setNavigationBarTitle({
+      title: a.data.navTile
+    })
     var t = this;
     wx.setNavigationBarColor({
       frontColor: wx.getStorageSync("fontcolor"),
@@ -88,21 +85,6 @@ Page((_defineProperty(_Page = {
         t.setData({
           cardnum: a
         }), t.Moneys();
-      }
-    });
-  },
-  Moneys: function () {
-    var a = this, e = wx.getStorageSync("openid");
-    app.util.request({
-      url: "entry/wxapp/Money",
-      method: "GET",
-      data: {
-        userid: e
-      },
-      success: function (e) {
-        a.setData({
-          umoney: e.data
-        });
       }
     });
   },

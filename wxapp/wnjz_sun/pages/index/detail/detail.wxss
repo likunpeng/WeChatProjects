@@ -134,7 +134,6 @@
 }
 
 #styleSecond .session {
-    width: 100%;
     margin-left: 20rpx;
     background: #fff;
     box-shadow: 0rpx 0rpx 14rpx 0rpx rgba(5,2,2,0.078);
